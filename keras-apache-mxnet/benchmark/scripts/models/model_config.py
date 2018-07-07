@@ -15,7 +15,7 @@ def get_model_config(model_name):
         return resnet50_benchmark.Resnet50Benchmark()
 
     if model_name == 'mnist_mlp':
-        return lstm_text_generation.MnistMlpBenchmark()
+        return mnist_mlp_benchmark.MnistMlpBenchmark()
 
     if model_name == 'resnet50_tf_keras':
         return resnet50_benchmark_tf_keras.Resnet50Benchmark()
