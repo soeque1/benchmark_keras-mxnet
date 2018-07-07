@@ -12,3 +12,6 @@ build/
 release/
 keras-apache-mxnet/benchmark/core
 *.tar
+.git
+.github
+*.log

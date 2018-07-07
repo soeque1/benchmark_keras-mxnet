@@ -8,7 +8,7 @@ do
 
   echo $i
   ## GPU
-  for system in 4_gpu gpu cpu
+  for system in cpu #4_gpu gpu cpu
     do
     for model in mnist_mlp # resnet50
       do
@@ -41,10 +41,16 @@ do
               channel_order=last              
           fi
 
-          res_dir=experiments/${system}_config/${framework}_${ver}/
-          #echo $res_dir
-          docker exec test /bin/bash -c "cd /home/work/ && mkdir -p $res_dir && ./$run_file ${system}_config ${model} True 1"
-          docker exec test /bin/bash -c "cd /home/work/ && cat ${framework}_*.log >> ${res_dir}/${i}_$(find ./ -name ${framework}_*.log -printf '%f\n') && rm -rf ${framework}_*.log"
+          store=experiments/${system}_config/${framework}_${ver}/
+          
+          benchmark_sh="cd /home/work/ && mkdir -p ${store} && ./${run_file} ${system}_config $model False 1"
+          echo ${benchmark_sh}
+          docker exec test /bin/bash -c "${benchmark_sh}"
+          
+          mv_sh="cd /home/work/ && cat ${framework}_*.log >> ${store}/${i}_$(find ./ -name ${framework}_*.log -printf '%f\n') && rm -rf ${framework}_*.log"
+          echo ${mv_sh}
+          docker exec test /bin/bash -c "${mv_sh}"
+
           docker rm -f test
       done
     done
