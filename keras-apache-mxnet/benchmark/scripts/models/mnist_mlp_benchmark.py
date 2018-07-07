@@ -102,15 +102,13 @@ class MnistMlpBenchmark:
         history_callback = model.fit(x_train, y_train, batch_size=batch_size, epochs=self.epochs,
                                      shuffle=True, callbacks=callbacks)
 
-        train_times = time_callback.get_time()
-        epochs = []
-        infer_times = []
-        for i in range(self.epochs):
-            start = time.time()
-            model.predict(x_train)
-            infer_time = '%.2f ' % float(time.time() - start) + 'sec'
-            infer_times.append(infer_time)
-            epochs.append(i)
+        train_times = [time_callback.get_total_time()]
+        
+        start = time.time()
+        model.predict(x_train)
+        infer_time = '%.2f ' % float(time.time() - start) + 'sec'
+        infer_times = [infer_time]
+        epochs = [self.epochs]
 
         #logg = LoggingMetrics(history_callback, time_callback)
         logg = LoggingMetricsCustom(train_times, infer_times, epochs)

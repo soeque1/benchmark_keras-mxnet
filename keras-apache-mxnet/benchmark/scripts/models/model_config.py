@@ -5,10 +5,10 @@ https://github.com/tensorflow/benchmarks/blob/keras-benchmarks/scripts/keras_ben
 """
 from models import resnet50_benchmark
 from models import mnist_mlp_benchmark
+from models import gluon_cnn_benchmark
 from models import resnet50_benchmark_tf_keras
 from models import lstm_synthetic
 from models import lstm_text_generation
-
 
 def get_model_config(model_name):
     if model_name == 'resnet50':
@@ -16,6 +16,9 @@ def get_model_config(model_name):
 
     if model_name == 'mnist_mlp':
         return mnist_mlp_benchmark.MnistMlpBenchmark()
+
+    if model_name == 'gluon_cnn':
+        return gluon_cnn_benchmark.GluonCNNBenchmark()
 
     if model_name == 'resnet50_tf_keras':
         return resnet50_benchmark_tf_keras.Resnet50Benchmark()
