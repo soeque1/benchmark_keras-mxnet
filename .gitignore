@@ -10,3 +10,5 @@ pytest_cache
 *.lprof
 build/
 release/
+keras-apache-mxnet/benchmark/core
+*.tar
