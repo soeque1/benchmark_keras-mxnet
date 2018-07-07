@@ -10,7 +10,7 @@ import logging
 import time
 
 import numpy as np
-from logging_metrics import LoggingMetrics
+from logging_metrics import LoggingMetrics, LoggingMetricsCustom
 from models.timehistory import TimeHistory
 
 import keras
