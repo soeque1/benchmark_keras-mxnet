@@ -1,5 +1,6 @@
 #!/bin/bash
-#rm -rf keras-apache-mxnet/benchmark/scripts/experiments/
+rm -rf keras-apache-mxnet/benchmark/scripts/*.log
+rm -rf keras-apache-mxnet/benchmark/scripts/experiments/
 
 iters=$1
 
