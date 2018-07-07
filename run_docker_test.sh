@@ -8,30 +8,35 @@ do
 
   echo $i
   ## GPU
-  for system in gpu #cpu
+  for system in 4_gpu gpu cpu
     do
     for model in mnist_mlp # resnet50
       do
       for framework in mxnet # tensorflow
         do
-
           if [ "$system" = "cpu" ]; then
             docker_nm='mkl'
             n_gpu=0
-          else
+            option_gpu=1
+          elif [ "$system" = "4_gpu" ]; then
+            docker_nm=$system
+            n_gpu=4
+            option_gpu=NVIDIA_VISIBLE_DEVICE=5,6,7,8
+          elif [ "$system" = "gpu" ]; then
             docker_nm=$system
             n_gpu=1
+            option_gpu=NVIDIA_VISIBLE_DEVICE=5
           fi
 
-          docker run -it --name test --runtime=nvidia -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d -p 8888:8888 bench_$system:0.1.0 /bin/bash
+          docker run -it --name test --runtime=nvidia -e ${option_gpu} -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d bench_${system}:0.1.0 /bin/bash
 
           if [ "$framework" = "tensorflow" ]; then
-              ver=1_8_0
+              ver=1.8.0
               run_file=run_tf_backend.sh
               channel_order=last
               
           elif [ "$framework" = "mxnet" ]; then
-              ver=1_2_0
+              ver=1.2.0
               run_file=run_mxnet_backend.sh
               channel_order=last              
           fi
