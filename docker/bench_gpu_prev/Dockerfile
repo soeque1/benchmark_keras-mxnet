@@ -34,7 +34,7 @@ curl https://bootstrap.pypa.io/get-pip.py | python${pyver}
 ## python libraries
 RUN pip${pyver} install --upgrade pip && \
 pip${pyver} install --no-cache-dir progressbar2 line_profiler \
-tensorflow-gpu==1.8.0 mxnet-cu90mkl==1.2.0 keras==2.2.0 keras-mxnet==2.2.0
+tensorflow-gpu==1.8.0 mxnet-cu90mkl==1.1.0 keras==2.2.0 keras-mxnet==2.2.0
 
 RUN ln -s /usr/bin/python3.6 /usr/bin/python
 RUN mkdir /home/$NB_USER && wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/libcudnn7_7.1.4.18-1+cuda9.0_amd64.deb -O /home/$NB_USER/libcudnn7_7.1.4.18-1+cuda9.0_amd64.deb
