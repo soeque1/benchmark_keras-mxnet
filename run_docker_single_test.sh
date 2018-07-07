@@ -7,7 +7,7 @@ docker_name=bench_gpu:0.1.0
 model=mnist_mlp #gluon_cnn #mnist_mlp #resnet50
 framework=mxnet
 ver=1.2.0
-option_gpu=NVIDIA_VISIBLE_DEVICE=0
+option_gpu=NVIDIA_VISIBLE_DEVICES=0
 store=experiments/${system}_config/${framework}_${ver}/
 
 iter=1

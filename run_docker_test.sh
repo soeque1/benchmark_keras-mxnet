@@ -21,11 +21,11 @@ do
           elif [ "$system" = "4_gpu" ]; then
             docker_nm='gpu'
             n_gpu=4
-            option_gpu=NVIDIA_VISIBLE_DEVICE=5,6,7,8
+            option_gpu=NVIDIA_VISIBLE_DEVICES=4,5,6,7
           elif [ "$system" = "gpu" ]; then
             docker_nm=$system
             n_gpu=1
-            option_gpu=NVIDIA_VISIBLE_DEVICE=5
+            option_gpu=NVIDIA_VISIBLE_DEVICES=4
           fi
 
           docker run -it --name test --runtime=nvidia -e ${option_gpu} -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d bench_${docker_nm}:0.1.0 /bin/bash
