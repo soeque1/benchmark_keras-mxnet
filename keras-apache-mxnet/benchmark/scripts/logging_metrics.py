@@ -73,7 +73,7 @@ class LoggingMetrics:
 
 class LoggingMetricsCustom(LoggingMetrics):
     def __init__(self, train_times, infer_times, epochs):
-        self.num_iteration = epochs[-1] + 1
+        self.num_iteration = 1
         self.metric_list = []
         self.pattern_list = []
         self.epochs = epochs
@@ -83,6 +83,6 @@ class LoggingMetricsCustom(LoggingMetrics):
         self.metric_list.append(self.epochs)
         self.metric_list.append(train_times)
         self.metric_list.append(infer_times)
-        self.pattern_list.append('[Epoch %d]\t')
+        self.pattern_list.append('[TOT Epochs %d]\t')
         self.pattern_list.append('train_time: %s\t')
         self.pattern_list.append('infer_time: %s\t')
