@@ -19,7 +19,7 @@ do
             n_gpu=0
             option_gpu=1
           elif [ "$system" = "4_gpu" ]; then
-            docker_nm=$system
+            docker_nm='gpu'
             n_gpu=4
             option_gpu=NVIDIA_VISIBLE_DEVICE=5,6,7,8
           elif [ "$system" = "gpu" ]; then
@@ -28,7 +28,7 @@ do
             option_gpu=NVIDIA_VISIBLE_DEVICE=5
           fi
 
-          docker run -it --name test --runtime=nvidia -e ${option_gpu} -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d bench_${system}:0.1.0 /bin/bash
+          docker run -it --name test --runtime=nvidia -e ${option_gpu} -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d bench_${docker_nm}:0.1.0 /bin/bash
 
           if [ "$framework" = "tensorflow" ]; then
               ver=1.8.0
