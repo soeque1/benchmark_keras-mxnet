@@ -3,17 +3,18 @@ rm -rf keras-apache-mxnet/benchmark/scripts/*.log
 rm -rf keras-apache-mxnet/benchmark/scripts/experiments/
 
 iters=$1
+epochs=10
 
 for ((i=1;i<=$iters;i++)); 
 do 
 
   echo $i
   ## GPU
-  for system in cpu #4_gpu gpu cpu
+  for system in gpu cpu #4_gpu gpu 
     do
-    for model in mnist_mlp # resnet50
+    for model in mnist_mlp resnet50
       do
-      for framework in mxnet # tensorflow
+      for framework in mxnet tensorflow
         do
           if [ "$system" = "cpu" ]; then
             docker_nm='mkl'
@@ -22,11 +23,11 @@ do
           elif [ "$system" = "4_gpu" ]; then
             docker_nm='gpu'
             n_gpu=4
-            option_gpu=NVIDIA_VISIBLE_DEVICES=4,5,6,7
+            option_gpu=NVIDIA_VISIBLE_DEVICES=0,1,2,3
           elif [ "$system" = "gpu" ]; then
             docker_nm=$system
             n_gpu=1
-            option_gpu=NVIDIA_VISIBLE_DEVICES=4
+            option_gpu=NVIDIA_VISIBLE_DEVICES=0
           fi
 
           docker run -it --name test --runtime=nvidia -e ${option_gpu} -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d bench_${docker_nm}:0.1.0 /bin/bash
@@ -39,12 +40,12 @@ do
           elif [ "$framework" = "mxnet" ]; then
               ver=1.2.0
               run_file=run_mxnet_backend.sh
-              channel_order=last              
+              channel_order=first              
           fi
 
           store=experiments/${system}_config/${framework}_${ver}/
           
-          benchmark_sh="cd /home/work/ && mkdir -p ${store} && ./${run_file} ${system}_config $model False 1"
+          benchmark_sh="cd /home/work/ && mkdir -p ${store} && ./${run_file} ${system}_config ${model} False ${epochs}"
           echo ${benchmark_sh}
           docker exec test /bin/bash -c "${benchmark_sh}"
           
