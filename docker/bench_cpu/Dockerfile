@@ -34,6 +34,6 @@ curl https://bootstrap.pypa.io/get-pip.py | python${pyver}
 ## python libraries
 RUN pip${pyver} install --upgrade pip && \
 pip${pyver} install --no-cache-dir progressbar2 line_profiler \
-tensorflow==1.8.0 mxnet==1.2.0 keras==2.2.0 keras-mxnet==2.2.0
+tensorflow==1.8.0 mxnet==1.2.0 mxnet-mkl==1.2.0 keras==2.2.0 keras-mxnet==2.2.0
 
 RUN ln -s /usr/bin/python3.6 /usr/bin/python

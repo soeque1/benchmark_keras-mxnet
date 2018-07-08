@@ -22,7 +22,7 @@
 
 python -c "from keras import backend"
 KERAS_BACKEND=mxnet
-CHANNELS_ORDER=channels_last
+CHANNELS_ORDER=channels_first
 sed -i -e 's/"image_data_format":[[:space:]]*"[^"]*/"image_data_format":\ "'$CHANNELS_ORDER'/g' ~/.keras/keras.json;
 sed -i -e 's/"backend":[[:space:]]*"[^"]*/"backend":\ "'$KERAS_BACKEND'/g' ~/.keras/keras.json;
 echo -e "Running tests with the following config:\n$(cat ~/.keras/keras.json)"
