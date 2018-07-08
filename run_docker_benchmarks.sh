@@ -3,16 +3,16 @@ rm -rf keras-apache-mxnet/benchmark/scripts/*.log
 rm -rf keras-apache-mxnet/benchmark/scripts/experiments/
 
 iters=$1
-epochs=10
+epochs=5
 
-for ((i=1;i<=$iters;i++)); 
-do 
+for ((i=1;i<=$iters;i++));
+do
 
   echo $i
   ## GPU
-  for system in gpu cpu #4_gpu gpu 
+  for system in gpu cpu #4_gpu gpu
     do
-    for model in mnist_mlp resnet50
+    for model in resnet50 #mnist_mlp gluon_cnn
       do
       for framework in mxnet tensorflow
         do
@@ -35,18 +35,18 @@ do
           if [ "$framework" = "tensorflow" ]; then
               ver=1.8.0
               run_file=run_tf_backend.sh
-              
+
           elif [ "$framework" = "mxnet" ]; then
               ver=1.2.0
-              run_file=run_mxnet_backend.sh       
+              run_file=run_mxnet_backend.sh
           fi
 
           store=experiments/${system}_config/${framework}_${ver}/
-          
+
           benchmark_sh="cd /home/work/ && mkdir -p ${store} && ./${run_file} ${system}_config ${model} False ${epochs}"
           echo ${benchmark_sh}
           docker exec test /bin/bash -c "${benchmark_sh}"
-          
+
           mv_sh="cd /home/work/ && cat ${framework}_*.log >> ${store}/${i}_$(find ./ -name ${framework}_*.log -printf '%f\n') && rm -rf ${framework}_*.log"
           echo ${mv_sh}
           docker exec test /bin/bash -c "${mv_sh}"
