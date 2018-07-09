@@ -10,9 +10,9 @@ do
 
   echo $i
   ## GPU
-  for system in gpu cpu #4_gpu gpu
+  for system in cpu #gpu #4_gpu
     do
-    for model in resnet50 #mnist_mlp gluon_cnn
+    for model in resnet50 mnist_mlp #gluon_cnn
       do
       for framework in mxnet tensorflow
         do

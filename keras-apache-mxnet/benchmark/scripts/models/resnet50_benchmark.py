@@ -10,7 +10,7 @@ import logging
 import time
 
 import numpy as np
-from logging_metrics import LoggingMetrics, LoggingMetricsCustom
+from logging_metrics import LoggingMetrics
 from models.timehistory import TimeHistory
 
 import keras
@@ -86,14 +86,5 @@ class Resnet50Benchmark:
         history_callback = model.fit(x_train, y_train, batch_size=batch_size, epochs=self.epochs,
                                      shuffle=True, callbacks=callbacks)
 
-        train_times = [time_callback.get_total_time()]
-
-        start = time.time()
-        model.predict(x_train)
-        infer_time = '%.2f ' % float(time.time() - start) + 'sec'
-        infer_times = [infer_time]
-        epochs = [self.epochs]
-
-        #logg = LoggingMetrics(history_callback, time_callback)
-        logg = LoggingMetricsCustom(train_times, infer_times, epochs)
+        logg = LoggingMetrics(history_callback, time_callback)
         logg.save_metrics_to_log(logging)

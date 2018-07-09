@@ -47,7 +47,7 @@ class MnistMlpBenchmark:
         self.total_time = 0
         self.batch_size = 32
         self.epochs = 20
-        self.num_samples = 1000 * 20
+        self.num_samples = 1000 * 50
         self.test_type = 'tf.keras, eager_mode'
 
     def run_benchmark(self, gpus=0, inference=False, use_dataset_tensors=False, epochs=20):
@@ -102,14 +102,5 @@ class MnistMlpBenchmark:
         history_callback = model.fit(x_train, y_train, batch_size=batch_size, epochs=self.epochs,
                                      shuffle=True, callbacks=callbacks)
 
-        train_times = [time_callback.get_total_time()]
-        
-        start = time.time()
-        model.predict(x_train)
-        infer_time = '%.2f ' % float(time.time() - start) + 'sec'
-        infer_times = [infer_time]
-        epochs = [self.epochs]
-
-        #logg = LoggingMetrics(history_callback, time_callback)
-        logg = LoggingMetricsCustom(train_times, infer_times, epochs)
+        logg = LoggingMetrics(history_callback, time_callback)
         logg.save_metrics_to_log(logging)
