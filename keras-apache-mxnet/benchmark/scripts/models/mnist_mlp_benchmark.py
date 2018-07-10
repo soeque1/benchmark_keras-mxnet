@@ -47,7 +47,7 @@ class MnistMlpBenchmark:
         self.total_time = 0
         self.batch_size = 32
         self.epochs = 20
-        self.num_samples = 20000
+        self.num_samples = 100000
         self.test_type = 'tf.keras, eager_mode'
 
     def run_benchmark(self, gpus=0, inference=False, use_dataset_tensors=False, epochs=20):

@@ -10,11 +10,11 @@ do
 
   echo "====== ${i} ======"
   ## GPU
-  for system in cpu gpu #4_gpu
+  for system in cpu #gpu #4_gpu
     do
-    for model in resnet50 mnist_mlp lstm_synthetic #gluon_cnn
+    for model in mnist_mlp #resnet50  lstm_synthetic #gluon_cnn
       do
-      for framework in mxnet tensorflow
+      for framework in mxnet #tensorflow
         do
           if [ "$system" = "cpu" ]; then
             docker_nm='mkl'
