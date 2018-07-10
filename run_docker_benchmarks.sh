@@ -19,7 +19,7 @@ do
           if [ "$system" = "cpu" ]; then
             docker_nm='mkl'
             n_gpu=0
-            option_gpu=NVIDIA_VISIBLE_DEVICES=-1
+            option_gpu=1
           elif [ "$system" = "4_gpu" ]; then
             docker_nm='gpu'
             n_gpu=4
