@@ -3,23 +3,23 @@ rm -rf keras-apache-mxnet/benchmark/scripts/*.log
 rm -rf keras-apache-mxnet/benchmark/scripts/experiments/
 
 iters=$1
-epochs=5
+epochs=3
 
 for ((i=1;i<=$iters;i++));
 do
 
-  echo $i
+  echo "====== ${i} ======"
   ## GPU
-  for system in cpu #gpu #4_gpu
+  for system in cpu gpu #4_gpu
     do
-    for model in resnet50 mnist_mlp #gluon_cnn
+    for model in resnet50 mnist_mlp lstm_synthetic #gluon_cnn
       do
       for framework in mxnet tensorflow
         do
           if [ "$system" = "cpu" ]; then
             docker_nm='mkl'
             n_gpu=0
-            option_gpu=1
+            option_gpu=NVIDIA_VISIBLE_DEVICES=-1
           elif [ "$system" = "4_gpu" ]; then
             docker_nm='gpu'
             n_gpu=4
