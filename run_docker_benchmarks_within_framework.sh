@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf keras-apache-mxnet/benchmark/scripts/*.log
-rm -rf keras-apache-mxnet/benchmark/scripts/experiments/
+#rm -rf keras-apache-mxnet/benchmark/scripts/experiments/
 
 iters=$1
 epochs=3
@@ -10,11 +10,11 @@ do
 
   echo "====== ${i} ======"
   ## GPU
-  for system in cpu gpu 4_gpu
+  for system in cpu gpu 
     do
-    for model in mnist_mlp resnet50  lstm_synthetic #gluon_cnn
+    for model in mnist_mlp resnet50 #lstm_synthetic #gluon_cnn
       do
-      for framework in mxnet tensorflow
+      for framework in mxnet #tensorflow
         do
           if [ "$system" = "cpu" ]; then
             docker_nm='mkl'
@@ -30,14 +30,14 @@ do
             option_gpu=NVIDIA_VISIBLE_DEVICES=0
           fi
 
-          docker run -it --name test --runtime=nvidia -e ${option_gpu} -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d bench_${docker_nm}:0.1.0 /bin/bash
+          docker run -it --name test --runtime=nvidia -e ${option_gpu} -e GRANT_SUDO=yes --user root -v ${PWD}/keras-apache-mxnet/benchmark/scripts:/home/work/ -d bench_${docker_nm}_prev:0.1.0 /bin/bash
 
           if [ "$framework" = "tensorflow" ]; then
               ver=1.8.0
               run_file=run_tf_backend.sh
 
           elif [ "$framework" = "mxnet" ]; then
-              ver=1.2.0
+              ver=1.1.0
               run_file=run_mxnet_backend.sh
           fi
 
