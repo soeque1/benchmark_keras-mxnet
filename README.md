@@ -8,3 +8,8 @@ cd docker && ./build_dockerfile.sh
 
 Note:
 - you can modify the number of experiment iterations, the number of epochs, the systems(e.g. cpu, gpu, 4-gpu), the models(mnist_mlp, resnet50, lstm_synthetic), and the frameworks(mxnet, tensorflow).
+
+----
+
+## 3. How to plot the results
+- you can refer to a summary_benchmarks.ipynb
