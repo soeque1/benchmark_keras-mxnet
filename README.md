@@ -1,5 +1,3 @@
-# benchmark_keras-mxnet
-
 ## 1. how to build the dockers
 cd docker && ./build_dockerfile.sh
 
